@@ -1,0 +1,38 @@
+{
+  "name": "mern_weather_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node app.js",
+    "app": "nodemon app.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run app\" \"npm run client\""
+  },
+  "author": "Bartek",
+  "license": "ISC",
+  "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.6.0",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.3.1",
+    "concurrently": "^4.1.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "iatacodes": "^7.0.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.14",
+    "morgan": "^1.9.1",
+    "node-fetch": "^2.3.0",
+    "path": "^0.12.7",
+    "predicthq": "0.0.19",
+    "react-bootstrap": "^1.0.0-beta.5"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "nodemon": "^1.18.10",
+    "supertest": "^4.0.2"
+  }
+}

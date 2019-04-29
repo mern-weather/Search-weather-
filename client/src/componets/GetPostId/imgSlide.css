@@ -1,0 +1,10 @@
+.imgSlideShow {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.mapboxgl-canvas-container {
+  width: 1px;
+}
