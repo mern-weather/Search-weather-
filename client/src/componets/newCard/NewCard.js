@@ -16,7 +16,11 @@ class App extends Component {
 
   render() {
     const { data } = this.props;
+<<<<<<< HEAD
     console.log(data);
+=======
+
+>>>>>>> 103ff413eb00821e20ac5980631ef166e0cf06cc
     if (!data || data === null) {
       return <Spinner />;
     } else {
