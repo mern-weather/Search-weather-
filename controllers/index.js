@@ -2,7 +2,8 @@ require("dotenv").config({ path: ".env" });
 const WeatherPost = require("../models/weather");
 const fetch = require("node-fetch");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-
+const nodemailer = require("nodemailer");
+const sgTransport = require("nodemailer-sendgrid-transport");
 //===keys===
 const geocodingClient = mbxGeocoding({
   accessToken: process.env.map_Box_Token
@@ -10,6 +11,16 @@ const geocodingClient = mbxGeocoding({
 const clientID = process.env.clientId,
   appId = process.env.appId,
   appCode = process.env.appCode;
+const yourEmail = process.env.yourEmail;
+
+const options = {
+  auth: {
+    api_user: process.env.user_Sendgrid,
+    api_key: process.env.api_key_Sendgrid
+  }
+};
+
+var client = nodemailer.createTransport(sgTransport(options));
 //=========================
 
 module.exports = {
@@ -45,7 +56,7 @@ module.exports = {
   },
 
   weatherPost: (req, res) => {
-    const city = req.body.user.city;
+    const { city, email } = req.body.user;
 
     const urls = [
       `https://api.unsplash.com/search/photos/?page=1&per_page=6&orientation=portrait&query=${city}&client_id=${clientID}`,
@@ -59,8 +70,15 @@ module.exports = {
     Promise.all(urls.map(url => fetch(url).then(res => res.json()))).then(
       ([api_1, api_2, api_3]) => {
         const displayImages = [];
-        for (let i = 0; i < api_1.results.length; i++) {
-          displayImages.push(api_1.results[i].urls.small);
+        const errorImage = [];
+        if (api_1.total === 0 || api_1.results === []) {
+          errorImage.push(
+            "https://elaw.org/sites/default/files/default_images/noimage.jpg"
+          );
+        } else {
+          for (let i = 0; i < api_1.results.length; i++) {
+            displayImages.push(api_1.results[i].urls.small);
+          }
         }
 
         const wiki = {
@@ -96,13 +114,50 @@ module.exports = {
             const coordinates = match.features[0].geometry.coordinates;
             const newWeather = {
               displayImages,
+              errorImage,
               temperature,
               description,
               iconLink,
               info,
               city,
-              coordinates
+              coordinates,
+              email
             };
+
+            const images = displayImages.map(item => {
+              return `<img src=${item} alt="Smiley face" height="300" width="300"></img>`;
+            });
+            let user_email = {
+              to: `${email}`,
+              from: `${yourEmail}`,
+              subject: "Hi there",
+              text: "Weather App",
+              html: `
+              <div>
+                     <h1>${city}</h1>
+                     <div>${images}</div>
+                     <div>
+                       <strong>
+                         <p>${description}   
+                         <img src=${iconLink} alt="Smiley face" height="300" width="300"></img>
+                         </p>
+                        </strong>
+                       <p>${info}</p>
+                     </div>
+              </div>
+              `
+            };
+
+            //=====================================
+            //Sedgrid
+
+            client.sendMail(user_email, function(err, res) {
+              if (err) {
+                console.error(err);
+              } else {
+                console.log(res);
+              }
+            });
 
             WeatherPost.create(newWeather)
               .then(newCreatedWeather => {
