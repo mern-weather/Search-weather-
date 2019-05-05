@@ -4,6 +4,7 @@ import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 const defaultSatte = {
   city: "",
+  email: "",
   inputError: "",
   successMessage: ""
 };
@@ -17,6 +18,11 @@ class AddCity extends Component {
   handleChange = e => {
     let city = e.target.value;
     this.setState({ city });
+  };
+
+  handleChangeEmail = e => {
+    let email = e.target.value;
+    this.setState({ email });
   };
 
   validate = () => {
@@ -37,7 +43,8 @@ class AddCity extends Component {
     const isValid = this.validate();
     if (isValid) {
       const user = {
-        city: this.state.city
+        city: this.state.city,
+        email: this.state.email
       };
       this.setState(defaultSatte);
       this.setState({ successMessage: "success" });
@@ -82,6 +89,14 @@ class AddCity extends Component {
                   value={this.state.city}
                   onChange={this.handleChange}
                   placeholder="Enter city"
+                />
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChangeEmail}
+                  placeholder="Enter email"
                 />
 
                 <Button

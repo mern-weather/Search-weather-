@@ -68,7 +68,8 @@ class AppID extends Component {
       city,
       temperature,
       iconLink,
-      coordinates
+      coordinates,
+      errorImage
     } = this.state.data;
 
     this.handelNextImg = () => {
@@ -134,14 +135,26 @@ class AppID extends Component {
               >
                 Next
               </Button>
-              <img
-                style={{
-                  width: "300px",
-                  height: "600px"
-                }}
-                src={displayImages[this.state.i]}
-                alt=""
-              />
+              {!errorImage ? (
+                <img
+                  style={{
+                    width: "300px",
+                    height: "600px"
+                  }}
+                  src={displayImages[this.state.i]}
+                  alt=""
+                />
+              ) : (
+                <img
+                  style={{
+                    width: "300px",
+                    height: "600px"
+                  }}
+                  src={errorImage}
+                  alt=""
+                />
+              )}
+
               <Button
                 onClick={() => this.handelPrevImg()}
                 variant="outline-secondary"

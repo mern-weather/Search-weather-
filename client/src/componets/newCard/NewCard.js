@@ -16,6 +16,7 @@ class App extends Component {
 
   render() {
     const { data } = this.props;
+    console.log(data);
     if (!data || data === null) {
       return <Spinner />;
     } else {
@@ -26,7 +27,16 @@ class App extends Component {
               {data.map((all, i) => (
                 <Col xs={6} md={4} key={i}>
                   <Card style={{ width: "18rem" }}>
-                    <Card.Img variant="top" src={all.displayImages} alt="img" />
+                    {!all.errorImage ? (
+                      <Card.Img
+                        variant="top"
+                        src={all.displayImages}
+                        alt="img"
+                      />
+                    ) : (
+                      <Card.Img variant="top" src={all.errorImage} alt="img" />
+                    )}
+
                     <Card.Body>
                       <Card.Title>{all.city}</Card.Title>
                       <Card.Text>
