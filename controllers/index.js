@@ -4,11 +4,8 @@ const fetch = require("node-fetch");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const nodemailer = require("nodemailer");
 const sgTransport = require("nodemailer-sendgrid-transport");
-<<<<<<< HEAD
 const emailTem = require("../emailTempalte");
 console.log(emailTem.emailTemplateHtml);
-=======
->>>>>>> 103ff413eb00821e20ac5980631ef166e0cf06cc
 //===keys===
 const geocodingClient = mbxGeocoding({
   accessToken: process.env.map_Box_Token
@@ -33,7 +30,10 @@ module.exports = {
     WeatherPost.find()
       .limit()
       .sort({ date: -1 })
-      .then(postsWeather => res.status(200).json(postsWeather))
+      .then(postsWeather => {
+        res.header("Access-Control-Allow-Origin", "*"); res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        return res.status(200).json(postsWeather)
+      })
       .catch(err =>
         res.status(500).json(err, { err: err }, console.log(err.msg))
       );
@@ -137,7 +137,6 @@ module.exports = {
               from: `${yourEmail}`,
               subject: "Hi there",
               text: "Weather App",
-<<<<<<< HEAD
               html: emailTem.emailTemplateHtml(
                 city,
                 images,
@@ -145,22 +144,6 @@ module.exports = {
                 info,
                 displayImages
               )
-=======
-              html: `
-              <div>
-                     <h1>${city}</h1>
-                     <div>${images}</div>
-                     <div>
-                       <strong>
-                         <p>${description}   
-                         <img src=${iconLink} alt="Smiley face" height="300" width="300"></img>
-                         </p>
-                        </strong>
-                       <p>${info}</p>
-                     </div>
-              </div>
-              `
->>>>>>> 103ff413eb00821e20ac5980631ef166e0cf06cc
             };
 
             //=====================================

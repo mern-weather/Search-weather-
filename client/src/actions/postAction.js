@@ -1,16 +1,16 @@
 import { FETCH_POSTS, NEW_POST } from "./types";
 import axios from "axios";
-const back_end_api = "/index";
+const back_end_api = "api/index";
 
 export const fetchPosts = () => dispatch => {
   axios
-    .get(back_end_api)
-    .then(res =>
-      dispatch({
+    .get('http://localhost:8080/index')
+    .then(res => {
+      return dispatch({
         type: FETCH_POSTS,
         payload: res.data
       })
-    )
+    })
     .catch(error => {
       // handle error
       console.log(error);
