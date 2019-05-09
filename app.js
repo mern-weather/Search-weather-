@@ -1,7 +1,5 @@
 require("dotenv").config({ path: ".env" });
 const express = require("express");
-const expressValidator = require("express-validator");
-const expressSession = require("express-session");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
