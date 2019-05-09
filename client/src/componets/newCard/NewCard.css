@@ -1,3 +1,7 @@
+.cards {
+  display: flex;
+}
+
 .card {
   border: none;
 }

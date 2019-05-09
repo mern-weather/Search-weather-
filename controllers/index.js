@@ -30,7 +30,10 @@ module.exports = {
     WeatherPost.find()
       .limit()
       .sort({ date: -1 })
-      .then(postsWeather => res.status(200).json(postsWeather))
+      .then(postsWeather => {
+        res.header("Access-Control-Allow-Origin", "*"); res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        return res.status(200).json(postsWeather)
+      })
       .catch(err =>
         res.status(500).json(err, { err: err }, console.log(err.msg))
       );

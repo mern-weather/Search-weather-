@@ -1,6 +1,6 @@
 import { FETCH_POSTS, NEW_POST } from "./types";
 import axios from "axios";
-const back_end_api = "/index";
+const back_end_api = "http://localhost:8080/index";
 
 export const fetchPosts = () => dispatch => {
   axios

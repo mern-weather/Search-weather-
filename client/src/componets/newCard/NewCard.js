@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { fetchPosts } from "../../actions/postAction";
 import "./NewCard.css";
 
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchPosts();
@@ -21,7 +22,7 @@ class App extends Component {
       return <Spinner />;
     } else {
       return (
-        <Jumbotron>
+        <div className='cards'>
           <Container className="d-flex flex-column">
             <Row className="justify-content-md-center">
               {data.map((all, i) => (
@@ -59,7 +60,7 @@ class App extends Component {
               ))}
             </Row>
           </Container>
-        </Jumbotron>
+        </div>
       );
     }
   }
