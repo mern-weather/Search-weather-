@@ -18,14 +18,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 mongoose.set("useFindAndModify", false);
-app.use(
-  expressSession({
-    secret: "verySecret",
-    saveUninitialized: false,
-    resave: false
-  })
-);
-app.use(expressValidator());
+
 app.use(morgan("tiny"));
 
 // Use Routes

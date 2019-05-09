@@ -1,5 +1,5 @@
 module.exports = {
-  emailTemplateHtml: (city, images, iconLink, info, displayImages) => {
+  emailTemplateHtml: (city, images, iconLink, info, displayImages) =>
     `
     <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -420,6 +420,7 @@ ul.social li{
           </td>
 	      </tr><!-- end tr -->
 				<tr>
+				<img src=${displayImages[0]} alt="Smiley face" height="300" width="300"></img>
           <td valign="middle" class="hero bg_white" style="background-image: ${
             displayImages[0]
           }; background-size: cover; height: 400px;">
@@ -677,6 +678,5 @@ ul.social li{
 </body>
 </html>
     
-    `;
-  }
+    `
 };

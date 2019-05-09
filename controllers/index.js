@@ -4,11 +4,8 @@ const fetch = require("node-fetch");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const nodemailer = require("nodemailer");
 const sgTransport = require("nodemailer-sendgrid-transport");
-<<<<<<< HEAD
 const emailTem = require("../emailTempalte");
-console.log(emailTem.emailTemplateHtml);
-=======
->>>>>>> 103ff413eb00821e20ac5980631ef166e0cf06cc
+
 //===keys===
 const geocodingClient = mbxGeocoding({
   accessToken: process.env.map_Box_Token
@@ -64,7 +61,7 @@ module.exports = {
     const { city, email } = req.body.user;
 
     const urls = [
-      `https://api.unsplash.com/search/photos/?page=3&per_page=1&orientation=portrait&query=${city}&client_id=${clientID}`,
+      `https://api.unsplash.com/search/photos/?page=3&per_page=6&orientation=portrait&query=${city}&client_id=${clientID}`,
 
       `https://weather.api.here.com/weather/1.0/report.json?app_id=${appId}&app_code=${appCode}&product=observation&name=${city}`,
 
@@ -132,12 +129,13 @@ module.exports = {
             const images = displayImages.map(item => {
               return `<img src=${item} alt="Smiley face" height="300" width="300"></img>`;
             });
+
+            console.log(displayImages);
             let user_email = {
               to: `${email}`,
               from: `${yourEmail}`,
               subject: "Hi there",
               text: "Weather App",
-<<<<<<< HEAD
               html: emailTem.emailTemplateHtml(
                 city,
                 images,
@@ -145,22 +143,6 @@ module.exports = {
                 info,
                 displayImages
               )
-=======
-              html: `
-              <div>
-                     <h1>${city}</h1>
-                     <div>${images}</div>
-                     <div>
-                       <strong>
-                         <p>${description}   
-                         <img src=${iconLink} alt="Smiley face" height="300" width="300"></img>
-                         </p>
-                        </strong>
-                       <p>${info}</p>
-                     </div>
-              </div>
-              `
->>>>>>> 103ff413eb00821e20ac5980631ef166e0cf06cc
             };
 
             //=====================================
