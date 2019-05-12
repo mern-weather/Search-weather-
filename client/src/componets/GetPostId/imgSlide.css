@@ -8,3 +8,7 @@
 .mapboxgl-canvas-container {
   width: 1px;
 }
+
+.mapboxgl-marker img {
+  width: 50px;
+}

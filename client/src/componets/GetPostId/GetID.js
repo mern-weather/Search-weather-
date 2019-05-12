@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Row, Container, Col, Button } from "react-bootstrap";
 import ReactMapboxGl, {
-  Popup,
   ZoomControl,
   ScaleControl,
-  Marker
+  Popup,
+  Layer,
+  Feature
 } from "react-mapbox-gl";
 import Spinner from "../spinner/Spinner";
 import axios from "axios";
-import markerUrl from "../../img/7fae17959c.png";
+// import markerUrl from "../../img/7fae17959c.png";
 import "./imgSlide.css";
 
 // {this.renderImages(displayImages ? displayImages : [])}
@@ -35,7 +36,6 @@ class AppID extends Component {
       .get(`/index/${id}`)
       .then(res => {
         const { data } = res;
-        const id = res.data._id;
 
         this.setState({ data });
       })
@@ -105,19 +105,28 @@ class AppID extends Component {
               zoom={[5]}
               attributionContro={true}
               dragRotate={true}
+              movingMethod="jumpTo"
             >
               <ZoomControl />
               <ScaleControl measurement="mi" />
-              <Marker coordinates={coordinates} anchor="bottom" />
+              <Layer
+                type="symbol"
+                id="marker"
+                layout={{ "icon-image": "marker-15" }}
+              >
+                <Feature coordinates={coordinates} />
+              </Layer>
+
               <Popup
                 coordinates={coordinates}
+                anchor="top"
                 offset={{
                   "bottom-left": [12, -38],
                   bottom: [0, -38],
                   "bottom-right": [-12, -38]
                 }}
               >
-                <h1>{city}</h1>
+                <div>{city}</div>
               </Popup>
             </Map>
           </div>

@@ -22,7 +22,7 @@ const options = {
   }
 };
 
-var client = nodemailer.createTransport(sgTransport(options));
+const client = nodemailer.createTransport(sgTransport(options));
 //=========================
 
 module.exports = {
